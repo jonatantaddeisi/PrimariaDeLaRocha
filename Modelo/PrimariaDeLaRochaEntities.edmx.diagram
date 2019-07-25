@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d9d7c336942e4471bd71922a6eeaefb1" Name="Diagram1" ZoomLevel="82">
+        <EntityTypeShape EntityType="PrimariaDeLaRochaModel.Alumno" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimariaDeLaRochaModel.Grado" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimariaDeLaRochaModel.Grupo" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimariaDeLaRochaModel.Maestro" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimariaDeLaRochaModel.Maestros_Grupos" Width="1.5" PointX="8.25" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimariaDeLaRochaModel.Maestros_Grupos_Materias" Width="1.5" PointX="10.5" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimariaDeLaRochaModel.Materia" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimariaDeLaRochaModel.Turno" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimariaDeLaRochaModel.Alumnos_Materias" Width="1.5" PointX="7.5" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimariaDeLaRochaModel.Alumnos_Maestros" Width="1.5" PointX="12.5" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PrimariaDeLaRochaModel.Calificaciones_Grupos_Actuales_Alumnos" Width="3.25" PointX="14.625" PointY="2.125" IsExpanded="true" />
+        <AssociationConnector Association="PrimariaDeLaRochaModel.FK__Alumnos__id_grup__3F466844" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimariaDeLaRochaModel.FK__Alumnos_M__id_al__4F7CD00D" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimariaDeLaRochaModel.FK__Grupos__id_grado__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimariaDeLaRochaModel.FK__Materias__id_gra__47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimariaDeLaRochaModel.FK__Grupos__id_turno__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimariaDeLaRochaModel.FK__Maestros___id_gr__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimariaDeLaRochaModel.FK__Maestros___id_ma__44FF419A" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimariaDeLaRochaModel.FK__Maestros___id_Ma__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimariaDeLaRochaModel.FK__Maestros___id_ma__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="PrimariaDeLaRochaModel.FK__Alumnos_M__id_ma__5070F446" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,778 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PrimariaDeLaRochaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Alumnos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="30" />
+          <Property Name="primer_apellido" Type="varchar" MaxLength="30" />
+          <Property Name="segundo_apellido" Type="varchar" MaxLength="30" />
+          <Property Name="fecha_nacimiento" Type="date" />
+          <Property Name="sexo" Type="varchar" MaxLength="10" />
+          <Property Name="direccion" Type="varchar" MaxLength="100" />
+          <Property Name="telefono" Type="varchar" MaxLength="10" />
+          <Property Name="id_grupo" Type="int" />
+        </EntityType>
+        <EntityType Name="Grados">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="Grupos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="5" />
+          <Property Name="capacidad" Type="int" />
+          <Property Name="id_grado" Type="int" />
+          <Property Name="id_turno" Type="int" />
+        </EntityType>
+        <EntityType Name="Maestros">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="30" />
+          <Property Name="primer_apellido" Type="varchar" MaxLength="30" />
+          <Property Name="segundo_apellido" Type="varchar" MaxLength="30" />
+          <Property Name="direccion" Type="varchar" MaxLength="100" />
+          <Property Name="telefono" Type="varchar" MaxLength="10" />
+          <Property Name="correo" Type="varchar" MaxLength="60" />
+        </EntityType>
+        <EntityType Name="Maestros_Grupos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id_grupo" Type="int" />
+          <Property Name="id_maestro" Type="int" />
+        </EntityType>
+        <EntityType Name="Maestros_Grupos_Materias">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id_Maestros_Grupos" Type="int" />
+          <Property Name="id_materia" Type="int" />
+        </EntityType>
+        <EntityType Name="Materias">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="90" />
+          <Property Name="id_grado" Type="int" />
+        </EntityType>
+        <EntityType Name="Turnos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="10" />
+          <Property Name="hora_entrada" Type="varchar" MaxLength="10" />
+          <Property Name="hora_salida" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Alumnos_Materias">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="calificacion" Type="float" />
+          <Property Name="id_alumno" Type="int" />
+          <Property Name="id_materia" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ESCUELAPRIMARIA.ADMINISTRACIONESCOLAR.Alumnos_Maestros' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Alumnos_Maestros">
+          <Key>
+            <PropertyRef Name="alumno_id" />
+            <PropertyRef Name="id_maestro" />
+          </Key>
+          <Property Name="alumno_id" Type="int" Nullable="false" />
+          <Property Name="alumno_nombre" Type="varchar" MaxLength="30" />
+          <Property Name="primer_apellido" Type="varchar" MaxLength="30" />
+          <Property Name="segundo_apellido" Type="varchar" MaxLength="30" />
+          <Property Name="id_maestro" Type="int" Nullable="false" />
+          <Property Name="nombre_maestro" Type="varchar" MaxLength="30" />
+          <Property Name="primer_apellido_maestro" Type="varchar" MaxLength="30" />
+          <Property Name="segundo_apellido_maestro" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ESCUELAPRIMARIA.ADMINISTRACIONESCOLAR.Calificaciones_Grupos_Actuales_Alumnos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Calificaciones_Grupos_Actuales_Alumnos">
+          <Key>
+            <PropertyRef Name="id_alumno" />
+            <PropertyRef Name="id_materia" />
+          </Key>
+          <Property Name="id_alumno" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="30" />
+          <Property Name="primer_apellido" Type="varchar" MaxLength="30" />
+          <Property Name="segundo_apellido" Type="varchar" MaxLength="30" />
+          <Property Name="id_materia" Type="int" Nullable="false" />
+          <Property Name="materia" Type="varchar" MaxLength="90" />
+          <Property Name="calificacion" Type="float" />
+        </EntityType>
+        <Association Name="FK__Alumnos__id_grup__3F466844">
+          <End Role="Grupos" Type="Self.Grupos" Multiplicity="0..1" />
+          <End Role="Alumnos" Type="Self.Alumnos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Alumnos">
+              <PropertyRef Name="id_grupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Alumnos_M__id_al__4F7CD00D">
+          <End Role="Alumnos" Type="Self.Alumnos" Multiplicity="0..1" />
+          <End Role="Alumnos_Materias" Type="Self.Alumnos_Materias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumnos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Alumnos_Materias">
+              <PropertyRef Name="id_alumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Alumnos_M__id_ma__5070F446">
+          <End Role="Materias" Type="Self.Materias" Multiplicity="0..1" />
+          <End Role="Alumnos_Materias" Type="Self.Alumnos_Materias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materias">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Alumnos_Materias">
+              <PropertyRef Name="id_materia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Grupos__id_grado__3B75D760">
+          <End Role="Grados" Type="Self.Grados" Multiplicity="0..1" />
+          <End Role="Grupos" Type="Self.Grupos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grados">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Grupos">
+              <PropertyRef Name="id_grado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Grupos__id_turno__3C69FB99">
+          <End Role="Turnos" Type="Self.Turnos" Multiplicity="0..1" />
+          <End Role="Grupos" Type="Self.Grupos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Turnos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Grupos">
+              <PropertyRef Name="id_turno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Maestros___id_gr__440B1D61">
+          <End Role="Grupos" Type="Self.Grupos" Multiplicity="0..1" />
+          <End Role="Maestros_Grupos" Type="Self.Maestros_Grupos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Maestros_Grupos">
+              <PropertyRef Name="id_grupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Maestros___id_ma__44FF419A">
+          <End Role="Maestros" Type="Self.Maestros" Multiplicity="0..1" />
+          <End Role="Maestros_Grupos" Type="Self.Maestros_Grupos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maestros">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Maestros_Grupos">
+              <PropertyRef Name="id_maestro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Maestros___id_Ma__4AB81AF0">
+          <End Role="Maestros_Grupos" Type="Self.Maestros_Grupos" Multiplicity="0..1" />
+          <End Role="Maestros_Grupos_Materias" Type="Self.Maestros_Grupos_Materias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maestros_Grupos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Maestros_Grupos_Materias">
+              <PropertyRef Name="id_Maestros_Grupos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Maestros___id_ma__4BAC3F29">
+          <End Role="Materias" Type="Self.Materias" Multiplicity="0..1" />
+          <End Role="Maestros_Grupos_Materias" Type="Self.Maestros_Grupos_Materias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materias">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Maestros_Grupos_Materias">
+              <PropertyRef Name="id_materia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Materias__id_gra__47DBAE45">
+          <End Role="Grados" Type="Self.Grados" Multiplicity="0..1" />
+          <End Role="Materias" Type="Self.Materias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grados">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Materias">
+              <PropertyRef Name="id_grado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PrimariaDeLaRochaModelStoreContainer">
+          <EntitySet Name="Alumnos" EntityType="Self.Alumnos" Schema="ADMINISTRACIONESCOLAR" store:Type="Tables" />
+          <EntitySet Name="Grados" EntityType="Self.Grados" Schema="ADMINISTRACIONESCOLAR" store:Type="Tables" />
+          <EntitySet Name="Grupos" EntityType="Self.Grupos" Schema="ADMINISTRACIONESCOLAR" store:Type="Tables" />
+          <EntitySet Name="Maestros" EntityType="Self.Maestros" Schema="ADMINISTRACIONESCOLAR" store:Type="Tables" />
+          <EntitySet Name="Maestros_Grupos" EntityType="Self.Maestros_Grupos" Schema="ADMINISTRACIONESCOLAR" store:Type="Tables" />
+          <EntitySet Name="Maestros_Grupos_Materias" EntityType="Self.Maestros_Grupos_Materias" Schema="ADMINISTRACIONESCOLAR" store:Type="Tables" />
+          <EntitySet Name="Materias" EntityType="Self.Materias" Schema="ADMINISTRACIONESCOLAR" store:Type="Tables" />
+          <EntitySet Name="Turnos" EntityType="Self.Turnos" Schema="ADMINISTRACIONESCOLAR" store:Type="Tables" />
+          <EntitySet Name="Alumnos_Materias" EntityType="Self.Alumnos_Materias" Schema="MAESTROS" store:Type="Tables" />
+          <EntitySet Name="Alumnos_Maestros" EntityType="Self.Alumnos_Maestros" store:Type="Views" store:Schema="ADMINISTRACIONESCOLAR">
+            <DefiningQuery>SELECT 
+    [Alumnos_Maestros].[alumno_id] AS [alumno_id], 
+    [Alumnos_Maestros].[alumno_nombre] AS [alumno_nombre], 
+    [Alumnos_Maestros].[primer_apellido] AS [primer_apellido], 
+    [Alumnos_Maestros].[segundo_apellido] AS [segundo_apellido], 
+    [Alumnos_Maestros].[id_maestro] AS [id_maestro], 
+    [Alumnos_Maestros].[nombre_maestro] AS [nombre_maestro], 
+    [Alumnos_Maestros].[primer_apellido_maestro] AS [primer_apellido_maestro], 
+    [Alumnos_Maestros].[segundo_apellido_maestro] AS [segundo_apellido_maestro]
+    FROM [ADMINISTRACIONESCOLAR].[Alumnos_Maestros] AS [Alumnos_Maestros]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Calificaciones_Grupos_Actuales_Alumnos" EntityType="Self.Calificaciones_Grupos_Actuales_Alumnos" store:Type="Views" store:Schema="ADMINISTRACIONESCOLAR">
+            <DefiningQuery>SELECT 
+    [Calificaciones_Grupos_Actuales_Alumnos].[id_alumno] AS [id_alumno], 
+    [Calificaciones_Grupos_Actuales_Alumnos].[nombre] AS [nombre], 
+    [Calificaciones_Grupos_Actuales_Alumnos].[primer_apellido] AS [primer_apellido], 
+    [Calificaciones_Grupos_Actuales_Alumnos].[segundo_apellido] AS [segundo_apellido], 
+    [Calificaciones_Grupos_Actuales_Alumnos].[id_materia] AS [id_materia], 
+    [Calificaciones_Grupos_Actuales_Alumnos].[materia] AS [materia], 
+    [Calificaciones_Grupos_Actuales_Alumnos].[calificacion] AS [calificacion]
+    FROM [ADMINISTRACIONESCOLAR].[Calificaciones_Grupos_Actuales_Alumnos] AS [Calificaciones_Grupos_Actuales_Alumnos]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Alumnos__id_grup__3F466844" Association="Self.FK__Alumnos__id_grup__3F466844">
+            <End Role="Grupos" EntitySet="Grupos" />
+            <End Role="Alumnos" EntitySet="Alumnos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Alumnos_M__id_al__4F7CD00D" Association="Self.FK__Alumnos_M__id_al__4F7CD00D">
+            <End Role="Alumnos" EntitySet="Alumnos" />
+            <End Role="Alumnos_Materias" EntitySet="Alumnos_Materias" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Alumnos_M__id_ma__5070F446" Association="Self.FK__Alumnos_M__id_ma__5070F446">
+            <End Role="Materias" EntitySet="Materias" />
+            <End Role="Alumnos_Materias" EntitySet="Alumnos_Materias" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Grupos__id_grado__3B75D760" Association="Self.FK__Grupos__id_grado__3B75D760">
+            <End Role="Grados" EntitySet="Grados" />
+            <End Role="Grupos" EntitySet="Grupos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Grupos__id_turno__3C69FB99" Association="Self.FK__Grupos__id_turno__3C69FB99">
+            <End Role="Turnos" EntitySet="Turnos" />
+            <End Role="Grupos" EntitySet="Grupos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Maestros___id_gr__440B1D61" Association="Self.FK__Maestros___id_gr__440B1D61">
+            <End Role="Grupos" EntitySet="Grupos" />
+            <End Role="Maestros_Grupos" EntitySet="Maestros_Grupos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Maestros___id_ma__44FF419A" Association="Self.FK__Maestros___id_ma__44FF419A">
+            <End Role="Maestros" EntitySet="Maestros" />
+            <End Role="Maestros_Grupos" EntitySet="Maestros_Grupos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Maestros___id_Ma__4AB81AF0" Association="Self.FK__Maestros___id_Ma__4AB81AF0">
+            <End Role="Maestros_Grupos" EntitySet="Maestros_Grupos" />
+            <End Role="Maestros_Grupos_Materias" EntitySet="Maestros_Grupos_Materias" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Maestros___id_ma__4BAC3F29" Association="Self.FK__Maestros___id_ma__4BAC3F29">
+            <End Role="Materias" EntitySet="Materias" />
+            <End Role="Maestros_Grupos_Materias" EntitySet="Maestros_Grupos_Materias" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Materias__id_gra__47DBAE45" Association="Self.FK__Materias__id_gra__47DBAE45">
+            <End Role="Grados" EntitySet="Grados" />
+            <End Role="Materias" EntitySet="Materias" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PrimariaDeLaRochaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Alumno">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="primer_apellido" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="segundo_apellido" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_nacimiento" Type="DateTime" Precision="0" />
+          <Property Name="sexo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="id_grupo" Type="Int32" />
+          <NavigationProperty Name="Grupo" Relationship="Self.FK__Alumnos__id_grup__3F466844" FromRole="Alumnos" ToRole="Grupos" />
+          <NavigationProperty Name="Alumnos_Materias" Relationship="Self.FK__Alumnos_M__id_al__4F7CD00D" FromRole="Alumnos" ToRole="Alumnos_Materias" />
+        </EntityType>
+        <EntityType Name="Grado">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Grupos" Relationship="Self.FK__Grupos__id_grado__3B75D760" FromRole="Grados" ToRole="Grupos" />
+          <NavigationProperty Name="Materias" Relationship="Self.FK__Materias__id_gra__47DBAE45" FromRole="Grados" ToRole="Materias" />
+        </EntityType>
+        <EntityType Name="Grupo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="capacidad" Type="Int32" />
+          <Property Name="id_grado" Type="Int32" />
+          <Property Name="id_turno" Type="Int32" />
+          <NavigationProperty Name="Alumnos" Relationship="Self.FK__Alumnos__id_grup__3F466844" FromRole="Grupos" ToRole="Alumnos" />
+          <NavigationProperty Name="Grado" Relationship="Self.FK__Grupos__id_grado__3B75D760" FromRole="Grupos" ToRole="Grados" />
+          <NavigationProperty Name="Turno" Relationship="Self.FK__Grupos__id_turno__3C69FB99" FromRole="Grupos" ToRole="Turnos" />
+          <NavigationProperty Name="Maestros_Grupos" Relationship="Self.FK__Maestros___id_gr__440B1D61" FromRole="Grupos" ToRole="Maestros_Grupos" />
+        </EntityType>
+        <EntityType Name="Maestro">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="primer_apellido" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="segundo_apellido" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="correo" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Maestros_Grupos" Relationship="Self.FK__Maestros___id_ma__44FF419A" FromRole="Maestros" ToRole="Maestros_Grupos" />
+        </EntityType>
+        <EntityType Name="Maestros_Grupos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id_grupo" Type="Int32" />
+          <Property Name="id_maestro" Type="Int32" />
+          <NavigationProperty Name="Grupo" Relationship="Self.FK__Maestros___id_gr__440B1D61" FromRole="Maestros_Grupos" ToRole="Grupos" />
+          <NavigationProperty Name="Maestro" Relationship="Self.FK__Maestros___id_ma__44FF419A" FromRole="Maestros_Grupos" ToRole="Maestros" />
+          <NavigationProperty Name="Maestros_Grupos_Materias" Relationship="Self.FK__Maestros___id_Ma__4AB81AF0" FromRole="Maestros_Grupos" ToRole="Maestros_Grupos_Materias" />
+        </EntityType>
+        <EntityType Name="Maestros_Grupos_Materias">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id_Maestros_Grupos" Type="Int32" />
+          <Property Name="id_materia" Type="Int32" />
+          <NavigationProperty Name="Maestros_Grupos" Relationship="Self.FK__Maestros___id_Ma__4AB81AF0" FromRole="Maestros_Grupos_Materias" ToRole="Maestros_Grupos" />
+          <NavigationProperty Name="Materia" Relationship="Self.FK__Maestros___id_ma__4BAC3F29" FromRole="Maestros_Grupos_Materias" ToRole="Materias" />
+        </EntityType>
+        <EntityType Name="Materia">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="90" FixedLength="false" Unicode="false" />
+          <Property Name="id_grado" Type="Int32" />
+          <NavigationProperty Name="Grado" Relationship="Self.FK__Materias__id_gra__47DBAE45" FromRole="Materias" ToRole="Grados" />
+          <NavigationProperty Name="Maestros_Grupos_Materias" Relationship="Self.FK__Maestros___id_ma__4BAC3F29" FromRole="Materias" ToRole="Maestros_Grupos_Materias" />
+          <NavigationProperty Name="Alumnos_Materias" Relationship="Self.FK__Alumnos_M__id_ma__5070F446" FromRole="Materias" ToRole="Alumnos_Materias" />
+        </EntityType>
+        <EntityType Name="Turno">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="hora_entrada" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="hora_salida" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Grupos" Relationship="Self.FK__Grupos__id_turno__3C69FB99" FromRole="Turnos" ToRole="Grupos" />
+        </EntityType>
+        <EntityType Name="Alumnos_Materias">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="calificacion" Type="Double" />
+          <Property Name="id_alumno" Type="Int32" />
+          <Property Name="id_materia" Type="Int32" />
+          <NavigationProperty Name="Alumno" Relationship="Self.FK__Alumnos_M__id_al__4F7CD00D" FromRole="Alumnos_Materias" ToRole="Alumnos" />
+          <NavigationProperty Name="Materia" Relationship="Self.FK__Alumnos_M__id_ma__5070F446" FromRole="Alumnos_Materias" ToRole="Materias" />
+        </EntityType>
+        <EntityType Name="Alumnos_Maestros">
+          <Key>
+            <PropertyRef Name="alumno_id" />
+            <PropertyRef Name="id_maestro" />
+          </Key>
+          <Property Name="alumno_id" Type="Int32" Nullable="false" />
+          <Property Name="alumno_nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="primer_apellido" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="segundo_apellido" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="id_maestro" Type="Int32" Nullable="false" />
+          <Property Name="nombre_maestro" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="primer_apellido_maestro" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="segundo_apellido_maestro" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Calificaciones_Grupos_Actuales_Alumnos">
+          <Key>
+            <PropertyRef Name="id_alumno" />
+            <PropertyRef Name="id_materia" />
+          </Key>
+          <Property Name="id_alumno" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="primer_apellido" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="segundo_apellido" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="id_materia" Type="Int32" Nullable="false" />
+          <Property Name="materia" Type="String" MaxLength="90" FixedLength="false" Unicode="false" />
+          <Property Name="calificacion" Type="Double" />
+        </EntityType>
+        <Association Name="FK__Alumnos__id_grup__3F466844">
+          <End Role="Grupos" Type="PrimariaDeLaRochaModel.Grupo" Multiplicity="0..1" />
+          <End Role="Alumnos" Type="Self.Alumno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Alumnos">
+              <PropertyRef Name="id_grupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Alumnos_M__id_al__4F7CD00D">
+          <End Role="Alumnos" Type="Self.Alumno" Multiplicity="0..1" />
+          <End Role="Alumnos_Materias" Type="Self.Alumnos_Materias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumnos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Alumnos_Materias">
+              <PropertyRef Name="id_alumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Grupos__id_grado__3B75D760">
+          <End Role="Grados" Type="Self.Grado" Multiplicity="0..1" />
+          <End Role="Grupos" Type="PrimariaDeLaRochaModel.Grupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grados">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Grupos">
+              <PropertyRef Name="id_grado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Materias__id_gra__47DBAE45">
+          <End Role="Grados" Type="Self.Grado" Multiplicity="0..1" />
+          <End Role="Materias" Type="Self.Materia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grados">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Materias">
+              <PropertyRef Name="id_grado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Grupos__id_turno__3C69FB99">
+          <End Role="Turnos" Type="Self.Turno" Multiplicity="0..1" />
+          <End Role="Grupos" Type="PrimariaDeLaRochaModel.Grupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Turnos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Grupos">
+              <PropertyRef Name="id_turno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Maestros___id_gr__440B1D61">
+          <End Role="Grupos" Type="PrimariaDeLaRochaModel.Grupo" Multiplicity="0..1" />
+          <End Role="Maestros_Grupos" Type="Self.Maestros_Grupos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Maestros_Grupos">
+              <PropertyRef Name="id_grupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Maestros___id_ma__44FF419A">
+          <End Role="Maestros" Type="Self.Maestro" Multiplicity="0..1" />
+          <End Role="Maestros_Grupos" Type="Self.Maestros_Grupos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maestros">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Maestros_Grupos">
+              <PropertyRef Name="id_maestro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Maestros___id_Ma__4AB81AF0">
+          <End Role="Maestros_Grupos" Type="Self.Maestros_Grupos" Multiplicity="0..1" />
+          <End Role="Maestros_Grupos_Materias" Type="Self.Maestros_Grupos_Materias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maestros_Grupos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Maestros_Grupos_Materias">
+              <PropertyRef Name="id_Maestros_Grupos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Maestros___id_ma__4BAC3F29">
+          <End Role="Materias" Type="Self.Materia" Multiplicity="0..1" />
+          <End Role="Maestros_Grupos_Materias" Type="Self.Maestros_Grupos_Materias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materias">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Maestros_Grupos_Materias">
+              <PropertyRef Name="id_materia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Alumnos_M__id_ma__5070F446">
+          <End Role="Materias" Type="Self.Materia" Multiplicity="0..1" />
+          <End Role="Alumnos_Materias" Type="Self.Alumnos_Materias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materias">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Alumnos_Materias">
+              <PropertyRef Name="id_materia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PrimariaDeLaRochaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Alumnos" EntityType="Self.Alumno" />
+          <EntitySet Name="Grados" EntityType="Self.Grado" />
+          <EntitySet Name="Grupo" EntityType="PrimariaDeLaRochaModel.Grupo" />
+          <EntitySet Name="Maestros" EntityType="Self.Maestro" />
+          <EntitySet Name="Maestros_Grupos" EntityType="Self.Maestros_Grupos" />
+          <EntitySet Name="Maestros_Grupos_Materias" EntityType="Self.Maestros_Grupos_Materias" />
+          <EntitySet Name="Materias" EntityType="Self.Materia" />
+          <EntitySet Name="Turnos" EntityType="Self.Turno" />
+          <EntitySet Name="Alumnos_Materias" EntityType="Self.Alumnos_Materias" />
+          <EntitySet Name="Alumnos_Maestros" EntityType="Self.Alumnos_Maestros" />
+          <EntitySet Name="Calificaciones_Grupos_Actuales_Alumnos" EntityType="Self.Calificaciones_Grupos_Actuales_Alumnos" />
+          <AssociationSet Name="FK__Alumnos__id_grup__3F466844" Association="Self.FK__Alumnos__id_grup__3F466844">
+            <End Role="Grupos" EntitySet="Grupo" />
+            <End Role="Alumnos" EntitySet="Alumnos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Alumnos_M__id_al__4F7CD00D" Association="Self.FK__Alumnos_M__id_al__4F7CD00D">
+            <End Role="Alumnos" EntitySet="Alumnos" />
+            <End Role="Alumnos_Materias" EntitySet="Alumnos_Materias" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Grupos__id_grado__3B75D760" Association="Self.FK__Grupos__id_grado__3B75D760">
+            <End Role="Grados" EntitySet="Grados" />
+            <End Role="Grupos" EntitySet="Grupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Materias__id_gra__47DBAE45" Association="Self.FK__Materias__id_gra__47DBAE45">
+            <End Role="Grados" EntitySet="Grados" />
+            <End Role="Materias" EntitySet="Materias" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Grupos__id_turno__3C69FB99" Association="Self.FK__Grupos__id_turno__3C69FB99">
+            <End Role="Turnos" EntitySet="Turnos" />
+            <End Role="Grupos" EntitySet="Grupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Maestros___id_gr__440B1D61" Association="Self.FK__Maestros___id_gr__440B1D61">
+            <End Role="Grupos" EntitySet="Grupo" />
+            <End Role="Maestros_Grupos" EntitySet="Maestros_Grupos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Maestros___id_ma__44FF419A" Association="Self.FK__Maestros___id_ma__44FF419A">
+            <End Role="Maestros" EntitySet="Maestros" />
+            <End Role="Maestros_Grupos" EntitySet="Maestros_Grupos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Maestros___id_Ma__4AB81AF0" Association="Self.FK__Maestros___id_Ma__4AB81AF0">
+            <End Role="Maestros_Grupos" EntitySet="Maestros_Grupos" />
+            <End Role="Maestros_Grupos_Materias" EntitySet="Maestros_Grupos_Materias" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Maestros___id_ma__4BAC3F29" Association="Self.FK__Maestros___id_ma__4BAC3F29">
+            <End Role="Materias" EntitySet="Materias" />
+            <End Role="Maestros_Grupos_Materias" EntitySet="Maestros_Grupos_Materias" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Alumnos_M__id_ma__5070F446" Association="Self.FK__Alumnos_M__id_ma__5070F446">
+            <End Role="Materias" EntitySet="Materias" />
+            <End Role="Alumnos_Materias" EntitySet="Alumnos_Materias" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PrimariaDeLaRochaModelStoreContainer" CdmEntityContainer="PrimariaDeLaRochaEntities">
+          <EntitySetMapping Name="Alumnos">
+            <EntityTypeMapping TypeName="PrimariaDeLaRochaModel.Alumno">
+              <MappingFragment StoreEntitySet="Alumnos">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="primer_apellido" ColumnName="primer_apellido" />
+                <ScalarProperty Name="segundo_apellido" ColumnName="segundo_apellido" />
+                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+                <ScalarProperty Name="sexo" ColumnName="sexo" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="id_grupo" ColumnName="id_grupo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Grados">
+            <EntityTypeMapping TypeName="PrimariaDeLaRochaModel.Grado">
+              <MappingFragment StoreEntitySet="Grados">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Grupo">
+            <EntityTypeMapping TypeName="PrimariaDeLaRochaModel.Grupo">
+              <MappingFragment StoreEntitySet="Grupos">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="capacidad" ColumnName="capacidad" />
+                <ScalarProperty Name="id_grado" ColumnName="id_grado" />
+                <ScalarProperty Name="id_turno" ColumnName="id_turno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Maestros">
+            <EntityTypeMapping TypeName="PrimariaDeLaRochaModel.Maestro">
+              <MappingFragment StoreEntitySet="Maestros">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="primer_apellido" ColumnName="primer_apellido" />
+                <ScalarProperty Name="segundo_apellido" ColumnName="segundo_apellido" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Maestros_Grupos">
+            <EntityTypeMapping TypeName="PrimariaDeLaRochaModel.Maestros_Grupos">
+              <MappingFragment StoreEntitySet="Maestros_Grupos">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_grupo" ColumnName="id_grupo" />
+                <ScalarProperty Name="id_maestro" ColumnName="id_maestro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Maestros_Grupos_Materias">
+            <EntityTypeMapping TypeName="PrimariaDeLaRochaModel.Maestros_Grupos_Materias">
+              <MappingFragment StoreEntitySet="Maestros_Grupos_Materias">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_Maestros_Grupos" ColumnName="id_Maestros_Grupos" />
+                <ScalarProperty Name="id_materia" ColumnName="id_materia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Materias">
+            <EntityTypeMapping TypeName="PrimariaDeLaRochaModel.Materia">
+              <MappingFragment StoreEntitySet="Materias">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_grado" ColumnName="id_grado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Turnos">
+            <EntityTypeMapping TypeName="PrimariaDeLaRochaModel.Turno">
+              <MappingFragment StoreEntitySet="Turnos">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="hora_entrada" ColumnName="hora_entrada" />
+                <ScalarProperty Name="hora_salida" ColumnName="hora_salida" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Alumnos_Materias">
+            <EntityTypeMapping TypeName="PrimariaDeLaRochaModel.Alumnos_Materias">
+              <MappingFragment StoreEntitySet="Alumnos_Materias">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="calificacion" ColumnName="calificacion" />
+                <ScalarProperty Name="id_alumno" ColumnName="id_alumno" />
+                <ScalarProperty Name="id_materia" ColumnName="id_materia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Alumnos_Maestros">
+            <EntityTypeMapping TypeName="PrimariaDeLaRochaModel.Alumnos_Maestros">
+              <MappingFragment StoreEntitySet="Alumnos_Maestros">
+                <ScalarProperty Name="alumno_id" ColumnName="alumno_id" />
+                <ScalarProperty Name="alumno_nombre" ColumnName="alumno_nombre" />
+                <ScalarProperty Name="primer_apellido" ColumnName="primer_apellido" />
+                <ScalarProperty Name="segundo_apellido" ColumnName="segundo_apellido" />
+                <ScalarProperty Name="id_maestro" ColumnName="id_maestro" />
+                <ScalarProperty Name="nombre_maestro" ColumnName="nombre_maestro" />
+                <ScalarProperty Name="primer_apellido_maestro" ColumnName="primer_apellido_maestro" />
+                <ScalarProperty Name="segundo_apellido_maestro" ColumnName="segundo_apellido_maestro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Calificaciones_Grupos_Actuales_Alumnos">
+            <EntityTypeMapping TypeName="PrimariaDeLaRochaModel.Calificaciones_Grupos_Actuales_Alumnos">
+              <MappingFragment StoreEntitySet="Calificaciones_Grupos_Actuales_Alumnos">
+                <ScalarProperty Name="id_alumno" ColumnName="id_alumno" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="primer_apellido" ColumnName="primer_apellido" />
+                <ScalarProperty Name="segundo_apellido" ColumnName="segundo_apellido" />
+                <ScalarProperty Name="id_materia" ColumnName="id_materia" />
+                <ScalarProperty Name="materia" ColumnName="materia" />
+                <ScalarProperty Name="calificacion" ColumnName="calificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
