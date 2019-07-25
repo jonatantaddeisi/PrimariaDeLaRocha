@@ -51,7 +51,13 @@ namespace Modelo
                 using (var contexto = new PrimariaDeLaRochaEntities())
                 {
                     return (from alu in contexto.Alumnos
-                            where alu.nombre.Contains(criterios)
+                            where (
+                                alu.nombre.Contains(criterios)
+                                || alu.primer_apellido.Contains(criterios)
+                                || alu.segundo_apellido.Contains(criterios)
+                                || alu.direccion.Contains(criterios)
+                                || alu.telefono.Contains(criterios)
+                                )
                             select alu).ToList();
                 }
             }
@@ -97,10 +103,37 @@ namespace Modelo
             {
                 using (var contexto = new PrimariaDeLaRochaEntities())
                 {
-                    var aluo = BuscarAlumnoPorId(aluoModificado.id);
-                    contexto.Alumnos.Attach(aluo);
+                    var alu = BuscarAlumnoPorId(aluoModificado.id);
+                    contexto.Alumnos.Attach(alu);
 
-                    aluo.nombre = aluoModificado.nombre;
+                    alu.nombre = aluoModificado.nombre;
+                    alu.primer_apellido = aluoModificado.primer_apellido;
+                    alu.segundo_apellido = aluoModificado.segundo_apellido;
+                    alu.direccion = aluoModificado.direccion;
+                    alu.telefono = aluoModificado.telefono;
+                    alu.sexo = aluoModificado.sexo;
+
+                    contexto.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static void CambiarAlumnoDeGrupo(int idAlumno, int idGrupo)
+        {
+            try
+            {
+                using (var contexto = new PrimariaDeLaRochaEntities())
+                {
+                    var alu = BuscarAlumnoPorId(idAlumno);
+                    var gru = GruposModelo.BuscarGruposPorId(idGrupo);
+
+                    contexto.Alumnos.Attach(alu);
+
+                    alu.Grupo = gru;
 
                     contexto.SaveChanges();
                 }
